@@ -12,6 +12,9 @@ class JobCandidate(models.Model):
     class Meta:
         verbose_name = 'Job Candidate'
         verbose_name_plural = 'Job Candidates'
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
     
 
 class Employer(models.Model):
@@ -23,6 +26,9 @@ class Employer(models.Model):
         verbose_name = 'Employer'
         verbose_name_plural = 'Employers'
 
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
+
 
 class Company(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
@@ -32,6 +38,9 @@ class Company(models.Model):
     class Meta:
         verbose_name = 'Company'
         verbose_name_plural = 'Companies'
+
+    def __str__(self):
+        return self.title
 
 
 class Job(models.Model):
@@ -44,6 +53,9 @@ class Job(models.Model):
     class Meta:
         verbose_name = 'Job'
         verbose_name_plural = 'Jobs'
+
+    def __str__(self):
+        return self.title
 
 
 class JobApplication(models.Model):

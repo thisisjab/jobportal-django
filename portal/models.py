@@ -3,23 +3,35 @@ from django.contrib.auth import get_user_model
 
 
 class JobCandidate(models.Model):
-    age = models.DateField(blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
     short_bio = models.CharField(max_length=150, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     user = models.OneToOneField(
         get_user_model(), primary_key=True, on_delete=models.CASCADE)
+    
+    class Meta:
+        verbose_name = 'Job Candidate'
+        verbose_name_plural = 'Job Candidates'
     
 
 class Employer(models.Model):
     short_bio = models.CharField(max_length=150, blank=True, null=True)
     user = models.OneToOneField(
         get_user_model(), primary_key=True, on_delete=models.CASCADE)
+    
+    class Meta:
+        verbose_name = 'Employer'
+        verbose_name_plural = 'Employers'
 
 
 class Company(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
     description = models.TextField(blank=True, null=True)
     manager = models.ForeignKey(Employer, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
 
 
 class Job(models.Model):
@@ -28,6 +40,10 @@ class Job(models.Model):
     expiry_date = models.DateField(blank=True, null=True)
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name='jobs')
+    
+    class Meta:
+        verbose_name = 'Job'
+        verbose_name_plural = 'Jobs'
 
 
 class JobApplication(models.Model):

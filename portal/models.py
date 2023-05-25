@@ -85,7 +85,7 @@ class JobApplication(models.Model):
         JobCandidate, on_delete=models.CASCADE, related_name='job_applications')
     submition_date = models.DateTimeField(auto_now=True)
     status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default=STATUS_APPROVED)
+        max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
     message = models.TextField(null=True, blank=True)
 
     class Meta:

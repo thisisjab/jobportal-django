@@ -90,6 +90,6 @@ class JobApplication(models.Model):
 
     def clean(self):
         from django.core.exceptions import ValidationError
-        if self.status != self.STATUS_PENDING and self.message is None:
+        if self.status != self.STATUS_PENDING and not self.message:
             raise ValidationError(message='Message is required.')
         return super().clean()

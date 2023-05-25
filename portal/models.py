@@ -46,6 +46,10 @@ class Company(models.Model):
 class JobCategory(models.Model):
     name = models.CharField(max_length=50, blank=False, null=False, unique=True)
 
+    class Meta:
+        verbose_name = 'Job Category'
+        verbose_name_plural = 'Job Categories'
+
     def __str__(self):
         return self.name
 

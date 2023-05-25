@@ -1,4 +1,6 @@
+from typing import Any
 from django.contrib import admin
+from django.db.models import Count
 from . import models
 
 
@@ -7,11 +9,18 @@ class JobCandidateAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'job_applications_count']
     list_per_page = 10
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            Count('job_applications')
+        )
+
     def full_name(self, job_candidate):
         return f'{job_candidate.user.first_name} {job_candidate.user.last_name}'
     
     def job_applications_count(self, job_candidate):
-        return job_candidate.job_applications.count()
+        return job_candidate.job_applications__count
+    
+    job_applications_count.admin_order_field = 'job_applications__count'
 
 
 @admin.register(models.Employer)

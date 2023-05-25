@@ -92,6 +92,9 @@ class JobApplication(models.Model):
         verbose_name = 'Job Application'
         verbose_name_plural = 'Job Applications'
 
+    def __str__(self):
+        return str(self.pk)
+
     def clean(self):
         from django.core.exceptions import ValidationError
         if self.status != self.STATUS_PENDING and not self.message:

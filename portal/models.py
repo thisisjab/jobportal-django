@@ -88,6 +88,10 @@ class JobApplication(models.Model):
         max_length=10, choices=STATUS_CHOICES, default=STATUS_APPROVED)
     message = models.TextField(null=True, blank=True)
 
+    class Meta:
+        verbose_name = 'Job Application'
+        verbose_name_plural = 'Job Applications'
+
     def clean(self):
         from django.core.exceptions import ValidationError
         if self.status != self.STATUS_PENDING and not self.message:

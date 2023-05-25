@@ -33,7 +33,7 @@ class Employer(models.Model):
 class Company(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
     description = models.TextField(blank=True, null=True)
-    manager = models.ForeignKey(Employer, on_delete=models.CASCADE)
+    manager = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='companies')
 
     class Meta:
         verbose_name = 'Company'

@@ -14,7 +14,7 @@ class JobCandidate(models.Model):
         verbose_name_plural = 'Job Candidates'
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.user.username} | {self.user.first_name} {self.user.last_name}'
     
 
 class Employer(models.Model):
@@ -27,7 +27,7 @@ class Employer(models.Model):
         verbose_name_plural = 'Employers'
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.user.username} | {self.user.first_name} {self.user.last_name}'
 
 
 class Company(models.Model):

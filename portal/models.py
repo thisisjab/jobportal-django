@@ -41,12 +41,20 @@ class Company(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class JobCategory(models.Model):
+    name = models.CharField(max_length=50, blank=False, null=False, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Job(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     expiry_date = models.DateField(blank=True, null=True)
+    category = models.ForeignKey(JobCategory, on_delete=models.PROTECT, related_name='jobs')
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name='jobs')
     

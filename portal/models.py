@@ -86,7 +86,7 @@ class JobApplication(models.Model):
     submition_date = models.DateTimeField(auto_now=True)
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default=STATUS_APPROVED)
-    message = models.TextField(null=True)
+    message = models.TextField(null=True, blank=True)
 
     def clean(self):
         from django.core.exceptions import ValidationError

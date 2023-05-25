@@ -67,7 +67,7 @@ class Job(models.Model):
         verbose_name_plural = 'Jobs'
 
     def __str__(self):
-        return self.title
+        return f'{self.title} | {self.company.title}'
 
 
 class JobApplication(models.Model):

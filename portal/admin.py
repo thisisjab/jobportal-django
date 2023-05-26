@@ -1,6 +1,6 @@
 from typing import Any
 from django.contrib import admin
-from django.db.models import Count, Value
+from django.db.models import Count
 from . import models
 
 

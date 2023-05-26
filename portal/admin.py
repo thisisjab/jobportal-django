@@ -6,8 +6,8 @@ from . import models
 
 @admin.register(models.JobCandidate)
 class JobCandidateAdmin(admin.ModelAdmin):
-    # TODO: split full_name to last_name and first_name
-    list_display = ['full_name', 'job_applications_count']
+    # TODO: add link to user
+    list_display = ['last_name', 'first_name', 'job_applications_count']
     list_per_page = 10
 
     def get_queryset(self, request):
@@ -16,8 +16,12 @@ class JobCandidateAdmin(admin.ModelAdmin):
         )
 
     @admin.display(ordering='user__last_name')
-    def full_name(self, job_candidate):
-        return f'{job_candidate.user.first_name} {job_candidate.user.last_name}'
+    def last_name(self, job_candidate):
+        return job_candidate.user.last_name
+    
+    @admin.display(ordering='user__first_name')
+    def first_name(self, job_candidate):
+        return job_candidate.user.first_name
     
     def job_applications_count(self, job_candidate):
         return job_candidate.job_applications__count

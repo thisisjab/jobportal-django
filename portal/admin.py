@@ -1,19 +1,21 @@
 from typing import Any
 from django.contrib import admin
-from django.db.models import Count
+from django.db.models import Count, Value
 from . import models
 
 
 @admin.register(models.JobCandidate)
 class JobCandidateAdmin(admin.ModelAdmin):
+    # TODO: split full_name to last_name and first_name
     list_display = ['full_name', 'job_applications_count']
     list_per_page = 10
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
-            Count('job_applications')
+            Count('job_applications'),
         )
 
+    @admin.display(ordering='user__last_name')
     def full_name(self, job_candidate):
         return f'{job_candidate.user.first_name} {job_candidate.user.last_name}'
     
@@ -28,11 +30,18 @@ class EmployerAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'companies_count']
     list_per_page = 10
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            Count('companies')
+        )
+
     def full_name(self, employer):
         return f'{employer.user.first_name} {employer.user.last_name}'
     
     def companies_count(self, employer):
-        return employer.companies.count()
+        return employer.companies__count
+    
+    companies_count.admin_order_field = 'companies__count'
 
 
 @admin.register(models.Company)
@@ -41,20 +50,34 @@ class CompanyAdmin(admin.ModelAdmin):
     list_display = ['title', 'manager_name', 'jobs_count']
     list_per_page = 10
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            Count('jobs')
+        )
+
     def manager_name(self, company):
         return f'{company.manager.user.first_name} {company.manager.user.last_name}'
     
     def jobs_count(self, company):
-        return company.jobs.count()
+        return company.jobs__count
     
+    jobs_count.admin_order_field = 'jobs__count'
 
+    
 @admin.register(models.JobCategory)
 class JobCategoryAdmin(admin.ModelAdmin):
     # TODO: add links to related jobs
     list_display = ['name', 'jobs_count']
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            Count('jobs')
+        )
+
     def jobs_count(self, category):
-        return category.jobs.count()
+        return category.jobs__count
+    
+    jobs_count.admin_order_field = 'jobs__count'
 
 
 @admin.register(models.Job)
@@ -64,11 +87,18 @@ class JobAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_select_related = ['category']
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            Count('applications')
+        )
+
     def company_title(self, job):
         return job.company.title
 
     def applications_count(self, job):
-        return job.applications.count()
+        return job.applications__count
+    
+    applications_count.admin_order_field = 'applications__count'
     
     def category_name(self, job):
         return job.category.name

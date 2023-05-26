@@ -1,6 +1,7 @@
 from typing import Any
 from django.contrib import admin
-from django.db.models import Count
+from django.db.models import Count, Value
+from django.db.models.functions import Concat
 from django.utils.html import format_html
 from django.urls import reverse
 from . import models
@@ -78,16 +79,29 @@ class EmployerAdmin(admin.ModelAdmin):
 @admin.register(models.Company)
 class CompanyAdmin(admin.ModelAdmin):
     # TODO: add link to manager
-    list_display = ['title', 'manager_name', 'jobs_count']
+    list_display = ['title', 'manager_username', 'manager_full_name', 'jobs_count']
     list_per_page = 10
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
-            Count('jobs')
+            Count('jobs'),
+            manager_full_name = Concat('manager__user__last_name' , 'manager__user__first_name'),
+            manager_username = Value('manager__user__username')
         )
+    
+    def manager_username(self, company):
+        url = reverse('admin:portal_employer_change', kwargs={
+            'object_id': company.manager.user.pk
+        })
+        text = f'@{company.manager.user.username}'
+        return format_html('<a href="{}">{}</a>', url, text)
+    
+    manager_username.admin_order_field = 'manager_username'
 
-    def manager_name(self, company):
+    def manager_full_name(self, company):
         return f'{company.manager.user.first_name} {company.manager.user.last_name}'
+    
+    manager_full_name.admin_order_field = 'manager_full_name'
     
     def jobs_count(self, company):
         return company.jobs__count

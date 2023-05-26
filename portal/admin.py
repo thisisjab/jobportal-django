@@ -7,13 +7,21 @@ from . import models
 @admin.register(models.JobCandidate)
 class JobCandidateAdmin(admin.ModelAdmin):
     # TODO: add link to user
-    list_display = ['last_name', 'first_name', 'job_applications_count']
+    list_display = ['user_id', 'username', 'last_name', 'first_name', 'job_applications_count']
     list_per_page = 10
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
             Count('job_applications'),
         )
+    
+    @admin.display(ordering='user__id')
+    def user_id(self, job_candidate):
+        return job_candidate.user.id
+    
+    @admin.display(ordering='user__username')
+    def username(self, job_candidate):
+        return job_candidate.user.username
 
     @admin.display(ordering='user__last_name')
     def last_name(self, job_candidate):

@@ -2,7 +2,7 @@ from typing import Any
 from django.contrib import admin
 from django.db.models import Count, Value
 from django.db.models.functions import Concat
-from django.utils.html import format_html
+from django.utils.html import format_html, urlencode
 from django.urls import reverse
 from . import models
 
@@ -78,7 +78,6 @@ class EmployerAdmin(admin.ModelAdmin):
 
 @admin.register(models.Company)
 class CompanyAdmin(admin.ModelAdmin):
-    # TODO: add link to manager
     list_display = ['title', 'manager_username', 'manager_full_name', 'jobs_count']
     list_per_page = 10
 
@@ -104,7 +103,13 @@ class CompanyAdmin(admin.ModelAdmin):
     manager_full_name.admin_order_field = 'manager_full_name'
     
     def jobs_count(self, company):
-        return company.jobs__count
+        url = (reverse('admin:portal_job_changelist')
+        + '?'
+        + urlencode({
+            'company__id': str(company.id)
+        }))
+        text = company.jobs__count
+        return format_html('<a href="{}">{}</a>', url, text)
     
     jobs_count.admin_order_field = 'jobs__count'
 

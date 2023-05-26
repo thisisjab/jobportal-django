@@ -43,16 +43,31 @@ class JobCandidateAdmin(admin.ModelAdmin):
 
 @admin.register(models.Employer)
 class EmployerAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'companies_count']
+    list_display = ['user_id', 'username', 'last_name', 'first_name', 'companies_count']
     list_per_page = 10
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
             Count('companies')
         )
+    
+    def user_id(self, employer):
+        return employer.user.id
+    
+    @admin.display(ordering='user__username')
+    def username(self, employer):
+        url = reverse('admin:core_user_change', kwargs={
+            'object_id': employer.user.pk
+        })
+        return format_html('<a href="{}">{}</a>', url, employer.user.username)
 
-    def full_name(self, employer):
-        return f'{employer.user.first_name} {employer.user.last_name}'
+    @admin.display(ordering='user__last_name')
+    def last_name(self, employer):
+        return employer.user.last_name
+    
+    @admin.display(ordering='user__first_name')
+    def first_name(self, employer):
+        return employer.user.first_name
     
     def companies_count(self, employer):
         return employer.companies__count

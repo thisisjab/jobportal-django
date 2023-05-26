@@ -116,7 +116,6 @@ class CompanyAdmin(admin.ModelAdmin):
     
 @admin.register(models.JobCategory)
 class JobCategoryAdmin(admin.ModelAdmin):
-    # TODO: add links to related jobs
     list_display = ['name', 'jobs_count']
 
     def get_queryset(self, request):
@@ -125,7 +124,13 @@ class JobCategoryAdmin(admin.ModelAdmin):
         )
 
     def jobs_count(self, category):
-        return category.jobs__count
+        url = (reverse('admin:portal_job_changelist')
+        + '?'
+        + urlencode({
+            'category__id': str(category.id)
+        }))
+        text = category.jobs__count
+        return format_html('<a href="{}">{}</a>', url, text)
     
     jobs_count.admin_order_field = 'jobs__count'
 

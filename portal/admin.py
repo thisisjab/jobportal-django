@@ -15,10 +15,10 @@ class JobCandidateAdmin(admin.ModelAdmin):
             Count('job_applications'),
         )
     
-    @admin.display(ordering='user__id')
+    # TODO: add ordering for user_id
     def user_id(self, job_candidate):
         return job_candidate.user.id
-    
+
     @admin.display(ordering='user__username')
     def username(self, job_candidate):
         return job_candidate.user.username

@@ -1,12 +1,13 @@
 from typing import Any
 from django.contrib import admin
 from django.db.models import Count
+from django.utils.html import format_html
+from django.urls import reverse
 from . import models
 
 
 @admin.register(models.JobCandidate)
 class JobCandidateAdmin(admin.ModelAdmin):
-    # TODO: add link to user
     list_display = ['user_id', 'username', 'last_name', 'first_name', 'job_applications_count']
     list_per_page = 10
 
@@ -21,7 +22,10 @@ class JobCandidateAdmin(admin.ModelAdmin):
 
     @admin.display(ordering='user__username')
     def username(self, job_candidate):
-        return job_candidate.user.username
+        url = reverse('admin:core_user_change', kwargs={
+            'object_id': job_candidate.user.pk
+        })
+        return format_html('<a href="{}">{}</a>', url, job_candidate.user.username)
 
     @admin.display(ordering='user__last_name')
     def last_name(self, job_candidate):

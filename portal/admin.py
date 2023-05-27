@@ -137,8 +137,7 @@ class JobCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(models.Job)
 class JobAdmin(admin.ModelAdmin):
-    # TODO: add link to company and category, add ordering
-    list_display = ['title', 'company_title', 'applications_count', 'expiry_date', 'category_name']
+    list_display = ['job_title', 'company_title', 'applications_count', 'expiry_date', 'category_name']
     list_per_page = 10
     list_select_related = ['category']
 
@@ -146,17 +145,38 @@ class JobAdmin(admin.ModelAdmin):
         return super().get_queryset(request).annotate(
             Count('applications')
         )
+    
+    @admin.display(ordering='title')
+    def job_title(self, job):
+        return job.title
 
+    @admin.display(ordering='company__title')
     def company_title(self, job):
-        return job.company.title
+        url = reverse('admin:portal_company_change', kwargs={
+            'object_id': job.company.pk
+        })
+        return format_html('<a href="{}">{}</a>', url, job.company.title)
 
     def applications_count(self, job):
-        return job.applications__count
+        url = (reverse('admin:portal_jobapplication_changelist')
+        + '?'
+        + urlencode({
+            'job__id': str(job.id)
+        }))
+        text = job.applications__count
+        return format_html('<a href="{}">{}</a>', url, text)
     
     applications_count.admin_order_field = 'applications__count'
     
+    @admin.display(ordering='category__name')
     def category_name(self, job):
-        return job.category.name
+        url = (reverse('admin:portal_job_changelist')
+        + '?'
+        + urlencode({
+            'category__id': str(job.category.id)
+        }))
+        text = job.category.name
+        return format_html('<a href="{}">{}</a>', url, text)
 
 
 @admin.register(models.JobApplication)

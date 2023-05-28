@@ -182,18 +182,36 @@ class JobAdmin(admin.ModelAdmin):
 @admin.register(models.JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
     # TODO: add related links and orderings
-    list_display = ['job_title', 'candidate_name', 'job_category', 'job_company_title', 'submition_date', 'status']
+    list_display = ['candidate_username', 'candidate_name', 'job_title', 'job_link', 'job_category', 'job_company_title', 'submition_date', 'status']
     list_per_page = 10
     list_select_related = ['job', 'candidate']
 
+    @admin.display(ordering='job__title')
     def job_title(self, application):
         return application.job.title
     
-    def candidate_name(self, application):
-        return application.candidate
+    def job_link(self, application):
+        url = reverse('admin:portal_job_change', kwargs={
+            'object_id': application.job.pk
+        })
+        text = 'Link'
+        return format_html('<a href="{}">{}</a>', url, text)
     
+    def candidate_username(self, application):
+        return application.candidate.user.username
+
+    @admin.display(ordering='candidate__user')
+    def candidate_name(self, application):
+        return f'{application.candidate.user.first_name} {application.candidate.user.last_name}'
+    
+    @admin.display(ordering='job__category__name')
     def job_category(self, application):
         return application.job.category
     
+    @admin.display(ordering='job__company__title')
     def job_company_title(self, application):
-        return application.job.company.title
+        url = reverse('admin:portal_company_change', kwargs={
+            'object_id': application.job.company.pk
+        })
+        text = application.job.company.title
+        return format_html('<a href="{}">{}</a>', url, text)

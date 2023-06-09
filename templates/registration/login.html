@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock title %}
+{% block navbar %}
+<div class="container">
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{% url 'pages:home' %}" class="nav-link px-2 link-secondary">Home</a></li>
+            <li><a href="#" class="nav-link px-2">About</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+        </div>
+    </header>
+</div>
+{% endblock navbar %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center py-4 w-100 m-auto"
+            style="max-width: 300px; row-gap: 10px;">
+            <input type="text" placeholder="email" class="form-control">
+            <input type="password" placeholder="password" class="form-control">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#" class="link-secondary">Forgot Password?</a></li>
+                  <li class="breadcrumb-item"><a href="#" class="link-success">Sign up</a></li>
+                </ol>
+              </nav>
+        </div>
+    </div>
+</div>
+{% endblock main %}

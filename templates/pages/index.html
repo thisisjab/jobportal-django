@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'image/magnify.png' %}" alt="" width="72" height="72">
+    <h1 class="display-5 fw-bold text-body-emphasis">Find Your Dream Job</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Looking for your dream job? Look no further than our services! With our expert guidance and resources, we can help you find the perfect job that matches your skills, experience, and career goals. Whether you're just starting out in your career or looking to make a change, we have the tools and expertise to help you succeed. So why wait? Sign up today and start exploring all the amazing opportunities waiting for you!</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-outline-success btn-lg px-4">Start Now!</button>
+        </div>
+    </div>
+</div>
+{% endblock main %}

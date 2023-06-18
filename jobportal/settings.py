@@ -89,6 +89,10 @@ DATABASES = {
     }
 }
 
+# Authentication configuration
+AUTHENTICATION_BACKENDS = [
+    'core.backends.AuthenticationBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

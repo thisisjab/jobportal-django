@@ -10,6 +10,16 @@ class UserCreationForm(DefaultUserCreationForm):
             "username",
         )
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_active = False
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+            if hasattr(self, "save_m2m"):
+                self.save_m2m()
+        return user
+
 
 class UserChangeForm(DefaultUserChangeForm):
     class Meta:

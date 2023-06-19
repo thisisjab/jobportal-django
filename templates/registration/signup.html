@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock title %}
+{% block title %}Sign Up{% endblock title %}
 {% block navbar %}
 <div class="container">
     <header
@@ -27,14 +27,20 @@
     <div class="row">
         <div class="col-12 d-flex flex-column justify-content-center align-items-center py-4 w-100 m-auto"
             style="max-width: 300px; row-gap: 10px;">
-            <form method="post">
+            <form method="post" class="d-flex align-items-center flex-column">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="sign up">
+                {% for field in form %}
+                <input placeholder="{{ field.label }}" class="form-control mb-2" name="{{ field.html_name }}"
+                id="{{ field.id_for_label }}" type="{{ field.field.widget.input_type }}">
+                {% for error in field.errors %}
+                <p class="text-body-secondary font-monospace">{{ error }}</p>
+                {% endfor%}
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Sign up">
             </form>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#" class="link-secondary">Already have an account?</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'login' %}" class="link-secondary">Already have an account?</a></li>
                 </ol>
               </nav>
         </div>

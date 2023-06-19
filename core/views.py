@@ -2,7 +2,6 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, FormView, TemplateView, View
 from django.core.mail import send_mail
 from django.shortcuts import redirect, reverse
-from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str

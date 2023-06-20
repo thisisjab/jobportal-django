@@ -27,6 +27,13 @@
     <div class="row">
         <div class="col-12 d-flex flex-column justify-content-center align-items-center py-4 w-100 m-auto"
             style="max-width: 300px; row-gap: 10px;">
+            {% if user.is_authenticated %}
+            <figure>
+                <blockquote class="blockquote">
+                  <p>You are already logged-in. <a href="{% url 'logout' %}">Logout.</a></p>
+                </blockquote>
+              </figure>
+            {% else %}
             <form method="post" class="d-flex align-items-center flex-column">
                 {% csrf_token %}
                 {% for field in form %}
@@ -43,6 +50,7 @@
                   <li class="breadcrumb-item"><a href="{% url 'login' %}" class="link-secondary">Already have an account?</a></li>
                 </ol>
               </nav>
+            {% endif %}
         </div>
     </div>
 </div>

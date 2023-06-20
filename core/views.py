@@ -47,7 +47,10 @@ class ActivateView(View):
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            # TODO: fix this part
-            return redirect('pages:home')
+            return redirect('activate_successful')
         else:
             return redirect('login')
+
+
+class ActivateSuccuessfulView(TemplateView):
+    template_name = 'registration/email_confirmation_successful.html'

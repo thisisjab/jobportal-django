@@ -29,8 +29,26 @@
             </ul>
 
             <div class="col-md-3 text-end">
-                <a href="{% url 'login' %}" type="button" class="btn btn-outline-primary me-2">Login</a>
-                <a href="{% url 'signup' %}" type="button" class="btn btn-primary">Sign-up</a>
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Account
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><h6 class="dropdown-header">@{{ user.username }}</h6></li>
+                        <li><a class="dropdown-item" href="#">Resume</a></li>
+                        <li><a class="dropdown-item" href="#">Job Applications</a></li>
+                        <li><a class="dropdown-item" href="#">Messages</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                      </ul>
+                  </div>
+          
+                {% else %}
+                    <a href="{% url 'login' %}" type="button" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="{% url 'signup' %}" type="button" class="btn btn-primary">Sign-up</a>
+                {% endif %}
             </div>
         </header>
     </div>

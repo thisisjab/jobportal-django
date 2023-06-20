@@ -94,6 +94,9 @@ AUTHENTICATION_BACKENDS = [
     'core.backends.AuthenticationBackend',
 ]
 
+LOGIN_REDIRECT_URL = 'pages:home'
+LOGOUT_REDIRECT_URL = 'pages:home'
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

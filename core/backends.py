@@ -12,7 +12,6 @@ class AuthenticationBackend(backends.ModelBackend):
         try:
             UserModel = get_user_model()
             user = UserModel.objects.get(Q(username__iexact=username) | Q(email__iexact=username))
-            print(user.username, "FIND USER!!!")
         except UserModel.DoesNotExist:
             # Run the default password hasher once to reduce the timing
             # difference between an existing and a nonexistent user (#20760).
@@ -20,17 +19,3 @@ class AuthenticationBackend(backends.ModelBackend):
         else:
             if user.check_password(password) and self.user_can_authenticate(user):
                 return user
-    # def authenticate(self, username=None, password=None, **kwargs):
-    #     UserModel = get_user_model()
-    #     user = UserModel.objects.get(
-    #         Q(username__iexact=username) | Q(email__iexact=username))
-    #     if user.check_password(password):
-    #         return user
-
-
-    # def get_user(self, user_id):
-    #     UserModel = get_user_model()
-    #     try:
-    #         return UserModel.objects.get(pk=user_id)
-    #     except UserModel.DoesNotExist:
-    #         return None

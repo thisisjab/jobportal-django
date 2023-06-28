@@ -35,6 +35,11 @@
             </figure>
             {% else %}
             <form method="post" class="d-flex flex-column">
+                {% if request.GET.next %}
+                <div class="alert alert-danger" role="alert">
+                   Please login first.
+                </div>
+                {% endif %}
                 {% csrf_token %}
                 {% for field in form %}
                 {% if field.label == 'Username' %}

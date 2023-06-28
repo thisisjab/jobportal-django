@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        {% if user.jobcandidate %}
+        <div class="col-12">
+            <h2>User Profile</h2>
+            <p>This profile will be shown as your resume to empolyers.</p>
+        </div>
+        <div class="col-lg-6">Username: {{ user.username }}</div>
+       
+        <div class="col-lg-6">Email: {{ user.email }}</div>
+        
+        <div class="col-lg-6">Full Name:
+        {% if not user.first_name and not user.last_name %}
+        not specified
+        {% else %}
+        {{ user.first_name }}{{ user.last_name }}
+        {% endif %}
+        </div>
+
+        <div class="col-lg-6">Birth Date:
+        {% if not user.birth_date %}
+        not specified
+        {% else %}
+        {{ user.birth_date }}
+        {% endif %}
+        </div>
+
+        <div class="col-12">Short Bio:
+        {% if not user.jobcandidate.short_bio %}
+        not specified
+        {% else %}
+        {{ user.jobcandidate.short_bio }}
+        {% endif %}
+        </div>
+
+        <div class="col-12">Description:
+        {% if not user.jobcandidate.description %}
+        not specified
+        {% else %}
+        {{ user.jobcandidate.description }}
+        {% endif %}
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+                You have no job candidate profile. <a href="#">Create now!</a>
+            </div>              
+        </div>
+        {% endif %}
+
+        {% if user.employer %}
+        <div class="col-12">
+            <h2>Employer Profile</h2>
+            <p>This profile will be shown as your profile to job candidates.</p>
+        </div>
+        <div class="col-lg-6">Username: {{ user.username }}</div>
+       
+        <div class="col-lg-6">Email: {{ user.email }}</div>
+        
+        <div class="col-lg-6">Full Name:
+        {% if not user.first_name and not user.last_name %}
+        not specified
+        {% else %}
+        {{ user.first_name }}{{ user.last_name }}
+        {% endif %}
+        </div>
+
+        <div class="col-12">Short Bio:
+        {% if not user.jobcandidate.short_bio %}
+        not specified
+        {% else %}
+        {{ user.jobcandidate.short_bio }}
+        {% endif %}
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+                You have no employer profile. <a href="#">Create now!</a>
+            </div>              
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock main %}

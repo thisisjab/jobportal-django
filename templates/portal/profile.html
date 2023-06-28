@@ -2,21 +2,25 @@
 {% block main %}
 <div class="container">
     <div class="row">
-        {% if user.jobcandidate %}
         <div class="col-12">
-            <h2>User Profile</h2>
-            <p>This profile will be shown as your resume to empolyers.</p>
+            <h2>General Information</h2>
         </div>
-        <div class="col-lg-6">Username: {{ user.username }}</div>
+        <div class="col-12">Username: {{ user.username }}</div>
        
-        <div class="col-lg-6">Email: {{ user.email }}</div>
+        <div class="col-12">Email: {{ user.email }}</div>
         
-        <div class="col-lg-6">Full Name:
+        <div class="col-12">Full Name:
         {% if not user.first_name and not user.last_name %}
         not specified
         {% else %}
         {{ user.first_name }}{{ user.last_name }}
         {% endif %}
+        </div>
+
+        {% if user.jobcandidate %}
+        <div class="col-12">
+            <h2>User Profile</h2>
+            <p>This profile will be shown as your resume to empolyers.</p>
         </div>
 
         <div class="col-lg-6">Birth Date:
@@ -27,7 +31,7 @@
         {% endif %}
         </div>
 
-        <div class="col-12">Short Bio:
+        <div class="col-6">Short Bio:
         {% if not user.jobcandidate.short_bio %}
         not specified
         {% else %}
@@ -54,17 +58,6 @@
         <div class="col-12">
             <h2>Employer Profile</h2>
             <p>This profile will be shown as your profile to job candidates.</p>
-        </div>
-        <div class="col-lg-6">Username: {{ user.username }}</div>
-       
-        <div class="col-lg-6">Email: {{ user.email }}</div>
-        
-        <div class="col-lg-6">Full Name:
-        {% if not user.first_name and not user.last_name %}
-        not specified
-        {% else %}
-        {{ user.first_name }}{{ user.last_name }}
-        {% endif %}
         </div>
 
         <div class="col-12">Short Bio:

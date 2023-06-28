@@ -24,10 +24,10 @@
         </div>
 
         <div class="col-lg-6">Birth Date:
-        {% if not user.birth_date %}
+        {% if not user.jobcandidate.birth_date %}
         not specified
         {% else %}
-        {{ user.birth_date }}
+        {{ user.jobcandidate.birth_date }}
         {% endif %}
         </div>
 

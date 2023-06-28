@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form method="post" class="d-flex align-items-center flex-column">
+                {% csrf_token %}
+                {% for field in form %}
+                <input placeholder="{{ field.label }}" class="form-control mb-2" name="{{ field.html_name }}"
+                    id="{{ field.id_for_label }}" type="{{ field.field.widget.input_type }}">
+                {% for error in field.errors %}
+                <p class="text-danger font-monospace">{{ error }}</p>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <p class="text-danger font-monospace">{{ error }}</p>
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Save">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main %}

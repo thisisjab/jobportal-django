@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from . import forms
@@ -22,3 +22,10 @@ class JobCandidateProfileCreateView(LoginRequiredMixin, FormView):
             user=self.request.user
         ).save()
         return super(JobCandidateProfileCreateView, self).form_valid(form)
+
+
+class JobCandidateProfileUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = forms.JobCandidateProfileForm
+    model = models.JobCandidate
+    success_url = reverse_lazy('portal:profile')
+    template_name = 'portal/jobcandidate_profile_form.html'

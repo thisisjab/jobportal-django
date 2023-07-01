@@ -57,7 +57,7 @@
 
         {% if user.employer %}
         <div class="col-12">
-            <h2>Employer Profile</h2>
+            <h2>Employer Profile <a href="{% url 'portal:employer_update' user.employer.pk %}" class="btn btn-primary">Edit</a></h2>
             <p>This profile will be shown as your profile to job candidates.</p>
         </div>
 
@@ -71,7 +71,7 @@
         {% else %}
         <div class="col-12">
             <div class="alert alert-warning" role="alert">
-                You have no employer profile. <a href="#">Create now!</a>
+                You have no employer profile. <a href="{% url 'portal:employer_create' %}">Create now!</a>
             </div>              
         </div>
         {% endif %}

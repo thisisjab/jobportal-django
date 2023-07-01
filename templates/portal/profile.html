@@ -20,7 +20,7 @@
 
         {% if user.jobcandidate %}
         <div class="col-12">
-            <h2>User Profile <a href="#" class="btn btn-primary">Edit</a></h2>
+            <h2>User Profile <a href="{% url 'portal:jobcandidate_update' user.jobcandidate.pk %}" class="btn btn-primary">Edit</a></h2>
             <p>This profile will be shown as your resume to empolyers.</p>
         </div>
 

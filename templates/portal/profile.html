@@ -62,10 +62,10 @@
         </div>
 
         <div class="col-12">Short Bio:
-        {% if not user.jobcandidate.short_bio %}
+        {% if not user.employer.short_bio %}
         not specified
         {% else %}
-        {{ user.jobcandidate.short_bio }}
+        {{ user.employer.short_bio }}
         {% endif %}
         </div>
         {% else %}

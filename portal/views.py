@@ -29,3 +29,24 @@ class JobCandidateProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = models.JobCandidate
     success_url = reverse_lazy('portal:profile')
     template_name = 'portal/jobcandidate_profile_form.html'
+
+
+class EmployerProfileCreateView(LoginRequiredMixin, FormView):
+    form_class = forms.EmployerProfileForm
+    model = models.Employer
+    success_url = reverse_lazy('portal:profile')
+    template_name = 'portal/employer_profile_form.html'
+
+    def form_valid(self, form):
+        models.Employer(
+            short_bio=form.cleaned_data['short_bio'],
+            user=self.request.user
+        ).save()
+        return super().form_valid(form)
+
+
+class EmployerProfileUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = forms.EmployerProfileForm
+    model = models.Employer
+    success_url = reverse_lazy('portal:profile')
+    template_name = 'portal/employer_profile_form.html'

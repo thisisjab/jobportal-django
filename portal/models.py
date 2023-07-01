@@ -63,6 +63,7 @@ class Job(models.Model):
         Company, on_delete=models.CASCADE, related_name='jobs')
     
     class Meta:
+        permissions = [('can_post_jobs', 'Can add new job posts')]
         verbose_name = 'Job'
         verbose_name_plural = 'Jobs'
 

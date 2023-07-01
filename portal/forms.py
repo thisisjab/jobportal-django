@@ -14,3 +14,10 @@ class JobCandidateProfileForm(forms.ModelForm):
         widgets = {
             'birth_date': DateInput()
         }
+
+
+class EmployerProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Employer
+        fields = ['short_bio']
